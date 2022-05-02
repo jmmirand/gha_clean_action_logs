@@ -17,9 +17,9 @@ async function run() {
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
     const { data: pullRequest } = await octokit.rest.pulls.get({
-        owner: 'octokit',
-        repo: 'rest.js',
-        pull_number: 123,
+        owner: 'jmmirand',
+        repo: 'gha_clean_action_logs',
+        pull_number: º,
         mediaType: {
           format: 'diff'
         }
