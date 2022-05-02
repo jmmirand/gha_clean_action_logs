@@ -19,7 +19,7 @@ async function run() {
     const { data: pullRequest } = await octokit.rest.pulls.get({
         owner: 'jmmirand',
         repo: 'gha_clean_action_logs',
-        pull_number: º,
+        pull_number: 1,
         mediaType: {
           format: 'diff'
         }
