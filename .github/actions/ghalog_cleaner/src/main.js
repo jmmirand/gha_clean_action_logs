@@ -26,6 +26,16 @@ async function run() {
     });
 
     console.log(pullRequest);
+
+     
+    const { data: listWorkflows } = await octokit.rest.actions.listRepoWorkflows({
+      owner: 'jmmirand',
+      repo: 'gha_clean_action_logs',
+    });
+
+    console.log(listWorkflows);
+
+
 }
 
 run();
