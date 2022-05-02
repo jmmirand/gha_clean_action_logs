@@ -3,6 +3,7 @@ Github Action que permite la limpieza de los logs de los jobs
 
 ## Parametros
 
+ * num_logs: Numero de Ficheros Logs que se quedan
  * myToken : Token acctions
 
 
