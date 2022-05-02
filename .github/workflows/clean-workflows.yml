@@ -7,18 +7,18 @@ jobs:
     runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-	
+  
   run-javascript-action:
     runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
  
       - name: JavaScript repeat action
-	uses: ./.github/actions/ghalog_cleaner
-		id: js-action
-		with:
-		  input_text: "texto de prueba"
-		  num_of_repeats: "4"
+        uses: ./.github/actions/ghalog_cleaner
+          id: js-action
+          with:
+           input_text: "texto de prueba"
+           num_of_repeats: "4"
  
       - name: Print JavaScript output
-	run: echo ${{ steps.js-action.outputs.output_text }}
+        run: echo ${{ steps.js-action.outputs.output_text }}
