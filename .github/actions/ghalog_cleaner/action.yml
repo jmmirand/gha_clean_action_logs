@@ -1,0 +1,21 @@
+name: 'Github Action Log Cleaner'
+author: 'Jose Miguel Miranda'
+description: 'Limpia los logs generados por Github Actions'
+
+inputs:
+  num_logs:
+    description: 'Numero de Github Actions Logs que no se borran'
+    required: true
+    default: 10
+
+outputs:
+  output_text:
+    description: 'Temporal'
+  
+runs:
+  using: 'node12'
+  main: 'src/main.js'
+
+branding:
+  icon: 'delete'
+  color: 'yellow'
