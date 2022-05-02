@@ -7,6 +7,9 @@ inputs:
     description: 'Numero de Github Actions Logs que no se borran'
     required: true
     default: 10
+  myToken:
+    description: "My Propio Token"
+      
 
 outputs:
   output_text:
