@@ -4,7 +4,11 @@ const core = require('@actions/core')
 const inputText = "test limpiar logs ";
 const numOfRepeats = parseInt(core.getInput('num_logs'));
 
-
+// Funcion que me va permitir dos ejecuciones de workflows
+// Compara las fechas de ulitma actualizacion
+function compareRuns(a, b) {
+  return b["date"] - a["date"];
+}
 
 async function run() {
     // This should be a token with access to your repository scoped in as a secret.
@@ -29,31 +33,42 @@ async function run() {
 
     console.log(pullRequest);
 
-     
+    // Lista de Workflows del Repo 
     const { data: listWorkflows } = await octokit.rest.actions.listRepoWorkflows({
       owner: 'jmmirand',
       repo: 'gha_clean_action_logs',
     });
-    console.log("============");
-    console.log(listWorkflows);
-    console.log("============");
 
     for (const [i, v] of listWorkflows["workflows"].entries()) {
-      console.log("............................");
-      
-      console.log(i, v)
+      wfName = v["name"]
+      wfPath = v["path"]
+      wId = v["id"]
 
+      // Lista Ejecuciones por workflows
       const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
         owner: 'jmmirand',
         repo: 'gha_clean_action_logs',
-        workflow_id: v["id"]
+        workflow_id: wId
       });
 
-      console.log(listWorkflowRuns);
-      console.log("............................");
- 
+      // Agrupo todoas las Ejecuciones
+      for (const [iR, vR] of listWorkflowsRuns["workflow_runs"].entries()) {
+          newRun = {}
+          newRun["id"] = vR["id"]
+          updatedDate = new Date (vR["updated_at"])
+          newRun["date"] = updatedDate
+          newRun["workflow_name"] = wfName
+          newRun["workflow_path"] = wfPath
+          newRun["workflow_id"] = wId
+          lstRuns.push(newRun)
+      }
     }
 
+    // Ordeno por fecha las ejecuciones
+    lstRuns.sort(compareRuns)
+
+    // Borro todas las ejecuciones a partir de la n-esima ejecucion
+    console.log(lstRuns)
 }
 
 run();
