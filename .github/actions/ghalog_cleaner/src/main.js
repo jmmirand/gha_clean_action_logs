@@ -16,22 +16,7 @@ async function run() {
     // myToken: ${{ secrets.GITHUB_TOKEN }}
     // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
     const myToken = core.getInput('myToken');
-
     const octokit = github.getOctokit(myToken)
-
-    // You can also pass in additional options as a second parameter to getOctokit
-    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-
-    const { data: pullRequest } = await octokit.rest.pulls.get({
-        owner: 'jmmirand',
-        repo: 'gha_clean_action_logs',
-        pull_number: 1,
-        mediaType: {
-          format: 'diff'
-        }
-    });
-
-    console.log(pullRequest);
 
     // Lista de Workflows del Repo 
     const { data: listWorkflows } = await octokit.rest.actions.listRepoWorkflows({
@@ -90,11 +75,12 @@ async function run() {
           repo: 'gha_clean_action_logs',
           run_id: v["id"]
         });       
-        console.log("deleted log: " + iPos + " / " + i)
-        console.log("run_number: " + v["run_number"])
+
+        console.log("deleted run_number: " + v["run_number"])
         console.log("Title: " + v["name"])
         console.log("Created date: " + v["created_date"] )
         console.log("Updated date: " + v["updated_date"] )
+        console.log("")
 
       }
 
