@@ -42,6 +42,14 @@ async function run() {
     console.log(listWorkflows);
     console.log("============");
 
+    
+    
+    listWorkflows["worlfkows"].forEach((value, index) => {
+        console.log(index); // 0, 1, 2
+        console.log(value); // 9, 2, 5
+    });
+
+
 
     // console.log(listWorkflows);
 
