@@ -4,6 +4,9 @@ const core = require('@actions/core')
 const inputText = "test limpiar logs ";
 const numOfRepeats = parseInt(core.getInput('num_logs'));
 
+
+
+
 async function run() {
     // This should be a token with access to your repository scoped in as a secret.
     // The YML workflow will need to set myToken with the GitHub Secret Token
@@ -33,7 +36,12 @@ async function run() {
       repo: 'gha_clean_action_logs',
     });
 
-    console.log(listWorkflows);
+    for (let oWorkflow of listWorkflows){
+        console.log("============")
+  	console.log(oWorkflow);
+    }    
+
+    // console.log(listWorkflows);
 
 
 }
