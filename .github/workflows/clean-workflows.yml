@@ -16,7 +16,7 @@ jobs:
         id: js-action
         with:
          input_text: "texto de prueba"
-         myToken: ${{ secrets.GITHUB_TOKEN }}
+         myToken: ${{ secrets.MY_TOKEN }}
          num_of_repeats: "4"
  
       - name: Print JavaScript output
