@@ -36,7 +36,7 @@ async function run() {
       repo: 'gha_clean_action_logs',
     });
 
-    log.console( listWorkflows.constructor.name ) 
+    console.log( listWorkflows.constructor.name ) 
 
     for (let oWorkflow of listWorkflows){
         console.log("============")
