@@ -52,7 +52,7 @@ async function run() {
       });
 
       // Agrupo todoas las Ejecuciones
-      for (const [iR, vR] of listWorkflowsRuns["workflow_runs"].entries()) {
+      for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
           newRun = {}
           newRun["id"] = vR["id"]
           updatedDate = new Date (vR["updated_at"])
