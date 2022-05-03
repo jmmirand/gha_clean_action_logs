@@ -70,7 +70,7 @@ async function run() {
     lstRuns.sort(compareRuns)
 
     // Borro todas las ejecuciones a partir de la n-esima ejecucion
-    // console.log(lstRuns)
+    console.log(lstRuns)
 
     // Agrupo todoas las Ejecuciones
     iPos = 0 ;
@@ -83,6 +83,7 @@ async function run() {
           run_id: v["id"]
         });       
         console.log("deleted log " + iPos + " / " + i)
+        console.log("date: " + v["date"] )
       }
 
     }
