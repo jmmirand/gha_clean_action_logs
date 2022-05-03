@@ -39,17 +39,20 @@ async function run() {
     console.log("============");
 
     for (const [i, v] of listWorkflows["workflows"].entries()) {
+      console.log("............................");
+      
       console.log(i, v)
-    }
 
-    const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
-      owner: 'jmmirand',
-      repo: 'gha_clean_action_logs',
-      workflow_id: v["id"]
-    });
-    
-    console.log(listWorkflowRuns);
+      const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
+        owner: 'jmmirand',
+        repo: 'gha_clean_action_logs',
+        workflow_id: v["id"]
+      });
+
+      console.log(listWorkflowRuns);
+      console.log("............................");
  
+    }
 
 }
 
