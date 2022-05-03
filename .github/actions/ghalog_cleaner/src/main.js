@@ -52,7 +52,7 @@ async function run() {
         workflow_id: wId
       });
 
-      console.log(listWorkflowRuns)
+      // console.log(listWorkflowRuns)
 
       // Agrupo todoas las Ejecuciones
       for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
@@ -60,6 +60,13 @@ async function run() {
           newRun["id"] = vR["id"]
           updatedDate = new Date (vR["updated_at"])
           newRun["date"] = updatedDate
+          newRun["updated_date"] = updatedDate
+          createdDate = new Date (vR["created_at"])
+          newRun["created_date"] = createdDate
+          newRun["run_number"] = vR["run_number"]
+          newRun["name"] = vR["name"]
+          
+
           newRun["workflow_name"] = wfName
           newRun["workflow_path"] = wfPath
           newRun["workflow_id"] = wId
@@ -71,7 +78,7 @@ async function run() {
     lstRuns.sort(compareRuns)
 
     // Borro todas las ejecuciones a partir de la n-esima ejecucion
-    console.log(lstRuns)
+    //console.log(lstRuns)
 
     // Agrupo todoas las Ejecuciones
     iPos = 0 ;
@@ -83,8 +90,12 @@ async function run() {
           repo: 'gha_clean_action_logs',
           run_id: v["id"]
         });       
-        console.log("deleted log " + iPos + " / " + i)
-        console.log("date: " + v["date"] )
+        console.log("deleted log: " + iPos + " / " + i)
+        console.log("run_number: " + v["run_number"])
+        console.log("Title: " + v["name"])
+        console.log("Created date: " + v["Created_date"] )
+        console.log("Updated date: " + v["updated_date"] )
+
       }
 
     }
