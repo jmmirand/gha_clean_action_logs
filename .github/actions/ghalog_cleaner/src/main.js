@@ -39,6 +39,7 @@ async function run() {
       repo: 'gha_clean_action_logs',
     });
 
+    lstRuns = []
     for (const [i, v] of listWorkflows["workflows"].entries()) {
       wfName = v["name"]
       wfPath = v["path"]
@@ -50,6 +51,7 @@ async function run() {
         repo: 'gha_clean_action_logs',
         workflow_id: wId
       });
+
 
       // Agrupo todoas las Ejecuciones
       for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
