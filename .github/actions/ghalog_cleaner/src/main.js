@@ -38,10 +38,10 @@ async function run() {
 
     console.log( listWorkflows.constructor.name ) 
 
-    for (let oWorkflow of listWorkflows){
-        console.log("============")
-  	console.log(oWorkflow);
-    }    
+    console.log("============");
+    console.log(listWorkflows);
+    console.log("============");
+
 
     // console.log(listWorkflows);
 
