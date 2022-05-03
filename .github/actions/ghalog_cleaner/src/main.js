@@ -93,7 +93,7 @@ async function run() {
         console.log("deleted log: " + iPos + " / " + i)
         console.log("run_number: " + v["run_number"])
         console.log("Title: " + v["name"])
-        console.log("Created date: " + v["Created_date"] )
+        console.log("Created date: " + v["created_date"] )
         console.log("Updated date: " + v["updated_date"] )
 
       }
