@@ -70,16 +70,19 @@ async function run() {
     lstRuns.sort(compareRuns)
 
     // Borro todas las ejecuciones a partir de la n-esima ejecucion
-    console.log(lstRuns)
+    // console.log(lstRuns)
 
     // Agrupo todoas las Ejecuciones
+    iPos = 0 ;
     for (const [i, v] of lstRuns.entries()) {
-      if (i > 10) {
+      iPos = iPos + 1
+      if (iPos > 10) {
         const { data: deletedWorkflowRun } = await octokit.rest.actions.deleteWorkflowRun({
           owner: 'jmmirand',
           repo: 'gha_clean_action_logs',
           run_id: v["id"]
         });       
+        console.log("deleted log " + iPos + " / " + i)
       }
 
     }
