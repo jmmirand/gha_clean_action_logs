@@ -6,7 +6,6 @@ const numOfRepeats = parseInt(core.getInput('num_logs'));
 
 
 
-
 async function run() {
     // This should be a token with access to your repository scoped in as a secret.
     // The YML workflow will need to set myToken with the GitHub Secret Token
@@ -35,20 +34,22 @@ async function run() {
       owner: 'jmmirand',
       repo: 'gha_clean_action_logs',
     });
-
-    console.log( listWorkflows.constructor.name ) 
-
     console.log("============");
     console.log(listWorkflows);
     console.log("============");
 
-    console.log(listWorkflows["workflows"][0])    
+    for (const [i, v] of listWorkflows["workflows"].entries()) {
+      console.log(i, v)
+    }
+
+    const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
+      owner: 'jmmirand',
+      repo: 'gha_clean_action_logs',
+      workflow_id: v["id"]
+    });
     
-
-
-
-    // console.log(listWorkflows);
-
+    console.log(listWorkflowRuns);
+ 
 
 }
 
@@ -65,8 +66,6 @@ for (i = 0; i < numOfRepeats; i++) {
 
 
 try {
-
-  
 
   core.debug('Inside try block');
   
