@@ -52,6 +52,7 @@ async function run() {
         workflow_id: wId
       });
 
+      console.log(listWorkflowRuns)
 
       // Agrupo todoas las Ejecuciones
       for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
