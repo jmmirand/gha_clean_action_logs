@@ -3,14 +3,6 @@ author: 'Jose Miguel Miranda'
 description: 'Limpia los logs/ejecuciones generados por Github Actions en un repo'
 
 inputs:
-  owner:
-    description: "Owner del repo que queremos limpiar"
-    required: true
-
-  repo:
-    description: "Nombre del Repo que queremos limpilar"
-    required: true
-
   num_runs:
     description: "Numero Logs/Ejeuciones que dejamos sin borrar"
     required: false
