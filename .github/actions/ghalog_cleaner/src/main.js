@@ -1,14 +1,16 @@
 const github = require('@actions/github');
 const core = require('@actions/core')
 
-console.log( process.env.GITHUB_REPOSITORY_OWNER)
-console.log( process.env.GITHUB_REPOSITORY)
+ 
+const owner = process.env.GITHUB_REPOSITORY_OWNER
+const repo = process.env.GITHUB_REPOSITORY.replace(owner + "/","")
+
+console.log("RepoName = " + owner + "/" + repo)
+
+
 
 // Recupero los parametros de la acción 
-const inputText = "test limpiar logs ";
 const numOfRepeats = parseInt(core.getInput('num_runs'));
-const owner = core.getInput('owner')
-const repo = core.getInput('repo')
 const myToken = core.getInput('myToken');
 
 // Funcion que me va permitir dos ejecuciones de workflows
