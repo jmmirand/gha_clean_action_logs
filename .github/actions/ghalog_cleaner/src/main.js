@@ -1,8 +1,12 @@
 const github = require('@actions/github');
 const core = require('@actions/core')
- 
+
+// Recupero los parametros de la acción 
 const inputText = "test limpiar logs ";
-const numOfRepeats = parseInt(core.getInput('num_logs'));
+const numOfRepeats = parseInt(core.getInput('num_runs'));
+const owner = core.getInput('owner')
+const repo = core.getInput('repo')
+const myToken = core.getInput('myToken');
 
 // Funcion que me va permitir dos ejecuciones de workflows
 // Compara las fechas de ulitma actualizacion
@@ -11,17 +15,13 @@ function compareRuns(a, b) {
 }
 
 async function run() {
-    // This should be a token with access to your repository scoped in as a secret.
-    // The YML workflow will need to set myToken with the GitHub Secret Token
-    // myToken: ${{ secrets.GITHUB_TOKEN }}
-    // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-    const myToken = core.getInput('myToken');
+
     const octokit = github.getOctokit(myToken)
 
     // Lista de Workflows del Repo 
     const { data: listWorkflows } = await octokit.rest.actions.listRepoWorkflows({
-      owner: 'jmmirand',
-      repo: 'gha_clean_action_logs',
+      owner: owner,
+      repo: repo,
     });
 
     lstRuns = []
@@ -32,8 +32,8 @@ async function run() {
 
       // Lista Ejecuciones por workflows
       const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
-        owner: 'jmmirand',
-        repo: 'gha_clean_action_logs',
+        owner: owner,
+        repo: repo,
         workflow_id: wId
       });
 
@@ -89,30 +89,3 @@ async function run() {
 }
 
 run();
-
-
-
-
-let outputText = ""
-let i;
-for (i = 0; i < numOfRepeats; i++) {
-    outputText += inputText;
-}
-
-
-try {
-
-  core.debug('Inside try block');
-  
-  core.warning('test Warning');
-
-  core.info('INFO Output to the actions build log')
-
-  core.notice('This is a message that will also emit an annotation')
-}
-catch (err) {
-  core.error(`Error ${err}, action may still succeed though`);
-}
-
- 
-core.setOutput('output_text', outputText)

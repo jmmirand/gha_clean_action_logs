@@ -15,6 +15,8 @@ jobs:
         uses: ./.github/actions/ghalog_cleaner
         id: js-action
         with:
+         owner: "jmmirand"
+         repo: "gha_clean_action_logs"
          input_text: "texto de prueba"
          myToken: ${{ secrets.MY_TOKEN }}
          num_of_repeats: "4"
