@@ -12,7 +12,7 @@ jobs:
         run:  npm install @actions/github 
  
       - name: JavaScript repeat action
-        uses: jmmirand/gha_clean_action_logs:feature/conver-global-act:ion
+        uses: jmmirand/gha_clean_action_logs@feature/conver-global-act:ion
         id: js-action
         with:
          myToken: ${{ secrets.MY_TOKEN }}
