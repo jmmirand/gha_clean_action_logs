@@ -12,12 +12,9 @@ jobs:
         run:  npm install @actions/github 
  
       - name: JavaScript repeat action
-        # uses: jmmirand/gha_clean_action_logs@main
-        uses: jmmirand/clean-workflows-logs-runs@main
-
-        id: js-action
+        uses: jmmirand/clean-workflows-logs-runs@v1
         with:
-         myToken: ${{ secrets.MY_REPO_TOKEN }}
+         myToken: ${{ secrets.GITHUB_TOKEN }}
          num_runs: 12
 
  
