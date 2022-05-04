@@ -14,9 +14,6 @@ jobs:
       - name: JavaScript repeat action
         uses: jmmirand/clean-workflows-logs-runs@v1
         with:
-         myToken: ${{ secrets.GITHUB_TOKEN }}
+         myToken: ${{ secrets.GITHUB_REPO_TOKEN }}
          num_runs: 12
 
- 
-      - name: Print JavaScript output
-        run: echo ${{ steps.js-action.outputs.output_text }}
