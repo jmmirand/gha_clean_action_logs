@@ -39,7 +39,7 @@ async function run() {
 
       // console.log(listWorkflowRuns)
 
-      // Agrupo todoas las Ejecuciones
+      // Agrupo todoas las Ejecuciones , si fuera necesario aplico filtro.
       for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
           newRun = {}
           newRun["id"] = vR["id"]
@@ -50,6 +50,7 @@ async function run() {
           newRun["created_date"] = createdDate
           newRun["run_number"] = vR["run_number"]
           newRun["name"] = vR["name"]
+          newRun["head_branch"] = vR["head_branch"]
           
 
           newRun["workflow_name"] = wfName
@@ -78,6 +79,7 @@ async function run() {
 
         console.log("deleted run_number: " + v["run_number"])
         console.log("Title: " + v["name"])
+        console.log("Branch: " + v["head_branch"])
         console.log("Created date: " + v["created_date"] )
         console.log("Updated date: " + v["updated_date"] )
         console.log("")
