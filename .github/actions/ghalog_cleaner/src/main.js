@@ -1,6 +1,9 @@
 const github = require('@actions/github');
 const core = require('@actions/core')
 
+console.log( process.env.GITHUB_REPOSITORY_OWNER)
+console.log( process.env.GITHUB_REPOSITORY)
+
 // Recupero los parametros de la acción 
 const inputText = "test limpiar logs ";
 const numOfRepeats = parseInt(core.getInput('num_runs'));
