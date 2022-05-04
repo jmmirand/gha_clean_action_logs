@@ -5,10 +5,6 @@ const core = require('@actions/core')
 const owner = process.env.GITHUB_REPOSITORY_OWNER
 const repo = process.env.GITHUB_REPOSITORY.replace(owner + "/","")
 
-console.log("RepoName = " + owner + "/" + repo)
-
-
-
 // Recupero los parametros de la acción 
 const numOfRepeats = parseInt(core.getInput('num_runs'));
 const myToken = core.getInput('myToken');
@@ -18,6 +14,8 @@ const myToken = core.getInput('myToken');
 function compareRuns(a, b) {
   return b["date"] - a["date"];
 }
+
+console.log("Se limpiará los runs y logs de: " + owner + "/" + repo)
 
 async function run() {
 
