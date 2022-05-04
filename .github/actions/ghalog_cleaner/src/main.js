@@ -6,7 +6,7 @@ const owner = process.env.GITHUB_REPOSITORY_OWNER
 const repo = process.env.GITHUB_REPOSITORY.replace(owner + "/","")
 
 // Recupero los parametros de la acción 
-const numOfRepeats = parseInt(core.getInput('num_runs'));
+const num_runs = parseInt(core.getInput('num_runs'));
 const myToken = core.getInput('myToken');
 
 // Funcion que me va permitir dos ejecuciones de workflows
@@ -15,7 +15,8 @@ function compareRuns(a, b) {
   return b["date"] - a["date"];
 }
 
-console.log("Se limpiará los runs y logs de: " + owner + "/" + repo)
+console.log("Limpieza runs/logs de: " + owner + "/" + repo)
+console.log("Se dejarán: " + num_runs  )
 
 async function run() {
 
@@ -73,7 +74,7 @@ async function run() {
     iPos = 0 ;
     for (const [i, v] of lstRuns.entries()) {
       iPos = iPos + 1
-      if (iPos > 10) {
+      if (iPos > num_runs) {
         const { data: deletedWorkflowRun } = await octokit.rest.actions.deleteWorkflowRun({
           owner: 'jmmirand',
           repo: 'gha_clean_action_logs',

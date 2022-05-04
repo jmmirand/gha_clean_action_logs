@@ -15,9 +15,8 @@ jobs:
         uses: ./.github/actions/ghalog_cleaner
         id: js-action
         with:
-         owner: "jmmirand"
-         repo: "gha_clean_action_logs"
          myToken: ${{ secrets.MY_TOKEN }}
+         num_runs: 12
 
  
       - name: Print JavaScript output
