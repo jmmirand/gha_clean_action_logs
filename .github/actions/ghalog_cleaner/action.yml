@@ -1,14 +1,24 @@
 name: 'Github Action Log Cleaner'
 author: 'Jose Miguel Miranda'
-description: 'Limpia los logs generados por Github Actions'
+description: 'Limpia los logs/ejecuciones generados por Github Actions en un repo'
 
 inputs:
-  num_logs:
-    description: 'Numero de Github Actions Logs que no se borran'
+  owner:
+    description: "Owner del repo que queremos limpiar"
     required: true
+
+  repo:
+    description: "Nombre del Repo que queremos limpilar"
+    required: true
+
+  num_runs:
+    description: "Numero Logs/Ejeuciones que dejamos sin borrar"
+    required: false
     default: 10
+
   myToken:
-    description: "My Propio Token"
+    description: "PAT con permiso escritura en el repo"
+    required: true
       
 
 outputs:

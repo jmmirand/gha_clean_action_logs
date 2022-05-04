@@ -1,60 +1,93 @@
 const github = require('@actions/github');
 const core = require('@actions/core')
- 
+
+// Recupero los parametros de la acción 
 const inputText = "test limpiar logs ";
-const numOfRepeats = parseInt(core.getInput('num_logs'));
+const numOfRepeats = parseInt(core.getInput('num_runs'));
+const owner = core.getInput('owner')
+const repo = core.getInput('repo')
+const myToken = core.getInput('myToken');
+
+// Funcion que me va permitir dos ejecuciones de workflows
+// Compara las fechas de ulitma actualizacion
+function compareRuns(a, b) {
+  return b["date"] - a["date"];
+}
 
 async function run() {
-    // This should be a token with access to your repository scoped in as a secret.
-    // The YML workflow will need to set myToken with the GitHub Secret Token
-    // myToken: ${{ secrets.GITHUB_TOKEN }}
-    // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-    const myToken = core.getInput('myToken');
 
     const octokit = github.getOctokit(myToken)
 
-    // You can also pass in additional options as a second parameter to getOctokit
-    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-
-    const { data: pullRequest } = await octokit.rest.pulls.get({
-        owner: 'octokit',
-        repo: 'rest.js',
-        pull_number: 123,
-        mediaType: {
-          format: 'diff'
-        }
+    // Lista de Workflows del Repo 
+    const { data: listWorkflows } = await octokit.rest.actions.listRepoWorkflows({
+      owner: owner,
+      repo: repo,
     });
 
-    console.log(pullRequest);
+    lstRuns = []
+    for (const [i, v] of listWorkflows["workflows"].entries()) {
+      wfName = v["name"]
+      wfPath = v["path"]
+      wId = v["id"]
+
+      // Lista Ejecuciones por workflows
+      const { data: listWorkflowRuns } = await octokit.rest.actions.listWorkflowRuns({
+        owner: owner,
+        repo: repo,
+        workflow_id: wId
+      });
+
+      // console.log(listWorkflowRuns)
+
+      // Agrupo todoas las Ejecuciones , si fuera necesario aplico filtro.
+      for (const [iR, vR] of listWorkflowRuns["workflow_runs"].entries()) {
+          newRun = {}
+          newRun["id"] = vR["id"]
+          updatedDate = new Date (vR["updated_at"])
+          newRun["date"] = updatedDate
+          newRun["updated_date"] = updatedDate
+          createdDate = new Date (vR["created_at"])
+          newRun["created_date"] = createdDate
+          newRun["run_number"] = vR["run_number"]
+          newRun["name"] = vR["name"]
+          newRun["head_branch"] = vR["head_branch"]
+          
+
+          newRun["workflow_name"] = wfName
+          newRun["workflow_path"] = wfPath
+          newRun["workflow_id"] = wId
+          lstRuns.push(newRun)
+      }
+    }
+
+    // Ordeno por fecha las ejecuciones
+    lstRuns.sort(compareRuns)
+
+    // Borro todas las ejecuciones a partir de la n-esima ejecucion
+    //console.log(lstRuns)
+
+    // Agrupo todoas las Ejecuciones
+    iPos = 0 ;
+    for (const [i, v] of lstRuns.entries()) {
+      iPos = iPos + 1
+      if (iPos > 10) {
+        const { data: deletedWorkflowRun } = await octokit.rest.actions.deleteWorkflowRun({
+          owner: 'jmmirand',
+          repo: 'gha_clean_action_logs',
+          run_id: v["id"]
+        });       
+
+        console.log("deleted run_number: " + v["run_number"])
+        console.log("Title: " + v["name"])
+        console.log("Branch: " + v["head_branch"])
+        console.log("Created date: " + v["created_date"] )
+        console.log("Updated date: " + v["updated_date"] )
+        console.log("")
+
+      }
+
+    }
+
 }
 
 run();
-
-
-
-
-let outputText = ""
-let i;
-for (i = 0; i < numOfRepeats; i++) {
-    outputText += inputText;
-}
-
-
-try {
-
-  
-
-  core.debug('Inside try block');
-  
-  core.warning('test Warning');
-
-  core.info('INFO Output to the actions build log')
-
-  core.notice('This is a message that will also emit an annotation')
-}
-catch (err) {
-  core.error(`Error ${err}, action may still succeed though`);
-}
-
- 
-core.setOutput('output_text', outputText)
